@@ -1,0 +1,15 @@
+
+
+RPCClient
+   发送的是消息：
+      样例类，做模式匹配的时候性能很好。
+      case class(id int,message:String)
+RPCServer
+
+消息有不同的类型：
+trait RemoteMessage extends Serializable
+1）case class RegisterMsg(username:String,passwd:String) extends RemoteMessage
+2) case class ResultMsg(id int,context:String) extends RemoteMessage
+      1,成功
+      2，失败
+3)case calss Heartbeat(id int,context:String) extends RemoteMessage

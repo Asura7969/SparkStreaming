@@ -26,11 +26,11 @@ class GroupConcatDistinctUDAF extends UserDefinedAggregateFunction{
   override def initialize(buffer: MutableAggregationBuffer): Unit = buffer.update(0,"")
 
   override def update(buffer: MutableAggregationBuffer, input: Row): Unit = {
-
+    buffer(0) = buffer.getString(0)+"1"
   }
 
   override def merge(buffer1: MutableAggregationBuffer, buffer2: Row): Unit = {
-
+    buffer1(0) = buffer1.getString(0)+buffer2.getString(0)
   }
 
   override def evaluate(buffer: Row): Any = buffer.getString(0)

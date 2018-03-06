@@ -24,8 +24,8 @@ object SparkDirectStreaming {
     */
   def createStreamingContext():StreamingContext={
 
-    val isLocal=true//是否使用local模式
-    val firstReadLastest=true//第一次启动是否从最新的开始消费
+    val isLocal = true//是否使用local模式
+    val firstReadLastest = true//第一次启动是否从最新的开始消费
 
     val sparkConf= new SparkConf().setAppName("Direct Kafka Offset to Zookeeper")
     if (isLocal)  sparkConf.setMaster("local[1]") //local模式

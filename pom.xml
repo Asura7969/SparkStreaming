@@ -16,6 +16,8 @@
         <hadoop.version>2.6.5</hadoop.version>
         <jackson.version>2.6.2</jackson.version>
         <akka.version>2.4.17</akka.version>
+        <spark.kafka.version>2.0.2</spark.kafka.version>
+        <kafka.version>0.9.0.0</kafka.version>
         <encoding>UTF-8</encoding>
     </properties>
 
@@ -114,11 +116,22 @@
             <artifactId>akka-remote_2.11</artifactId>
             <version>${akka.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming-kafka-0-8_2.11</artifactId>
+            <version>${spark.kafka.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>${kafka.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
         <sourceDirectory>src/main/scala</sourceDirectory>
-        <testSourceDirectory>src/test/scala</testSourceDirectory>
         <pluginManagement>
             <plugins>
                 <plugin>

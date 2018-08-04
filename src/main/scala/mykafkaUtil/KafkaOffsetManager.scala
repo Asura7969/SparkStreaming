@@ -5,6 +5,9 @@ import kafka.utils.ZkUtils
 import org.I0Itec.zkclient.ZkClient
 import org.apache.spark.rdd.RDD
 import org.apache.spark.streaming.kafka.HasOffsetRanges
+import org.apache.zookeeper.data.Stat
+
+import scala.collection.mutable
 
 /**
   * 负责kafka偏移量的读取和保存
@@ -26,11 +29,14 @@ object KafkaOffsetManager {
    def readOffsets(zkClient: ZkClient, zkOffsetPath: String, topic: String): Option[Map[TopicAndPartition, Long]] = {
     //（偏移量字符串,zk元数据)
     val (offsetsRangesStrOpt, _) = ZkUtils.readDataMaybeNull(zkClient, zkOffsetPath)//从zk上读取偏移量
+
+
+
     offsetsRangesStrOpt match {
       case Some(offsetsRangesStr) =>
         //这个topic在zk里面最新的分区数量
+        val stringToInts: mutable.Map[String, Seq[Int]] = ZkUtils.getPartitionsForTopics(zkClient, Seq(topic))
         val lastest_partitions = ZkUtils.getPartitionsForTopics(zkClient, Seq(topic))(topic)
-
         var offsets: Map[TopicAndPartition, Long] = offsetsRangesStr.split(",") //按逗号split成数组
           .map(s => s.split(":")) //按冒号拆分每个分区和偏移量
           .map { case Array(partitionStr, offsetStr) => TopicAndPartition(topic, partitionStr.toInt) -> offsetStr.toLong }//加工成最终的格式

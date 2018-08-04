@@ -18,7 +18,7 @@ object MysqlPool {
    * 释放连接
    */
   def releaseConn(conn:Connection):Unit={
-    pool.push(conn);
+    pool.push(conn)
   }
   /**
    * 获取连接
@@ -28,13 +28,13 @@ object MysqlPool {
     AnyRef.synchronized({
       if(pool.isEmpty()){
         for( i <- 1 to connectionNum){
-          val conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/aura","root","root");
-          pool.push(conn);
-          conNum+1;
+          val conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/aura","root","root")
+          pool.push(conn)
+          conNum+1
         }
       }
       
-      pool.poll();
+      pool.poll()
     })
     
   }

@@ -3,6 +3,7 @@ package java8;
 import java8.pojo.Dish;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -21,9 +22,55 @@ public class Java8Demo {
 
 
         //TODO:start 第六章        用流收集数据
-
+        //归约和汇总
+        collectors();
     }
 
+    public static void collectors(){
+        List<Dish> menu = new ArrayList<>();
+
+        menu.add(new Dish("pork", false, 800, Dish.Type.MEAT));
+        menu.add(new Dish("beef", false, 700, Dish.Type.MEAT));
+        menu.add(new Dish("chicken", false, 400, Dish.Type.MEAT));
+        menu.add(new Dish("french fries", true, 530, Dish.Type.OTHER));
+        menu.add(new Dish("rice", true, 350, Dish.Type.OTHER));
+        menu.add(new Dish("season fruit", true, 120, Dish.Type.OTHER));
+        menu.add(new Dish("pizza", true, 550, Dish.Type.OTHER));
+        menu.add(new Dish("prawns", true, 300, Dish.Type.FISH));
+        menu.add(new Dish("salmon", false, 450, Dish.Type.FISH));
+        menu.add(new Dish("salmon", false, 450, Dish.Type.FISH));
+
+        Long collect1 = menu.stream().collect(Collectors.counting());
+        //等于上面一种
+        Long collect2 = menu.stream().count();
+        System.out.println(collect1);
+
+        Comparator<Dish> dishCaloriesComparator =
+                Comparator.comparingInt(Dish::getCalories);
+        menu.stream().max(dishCaloriesComparator);
+
+
+        IntSummaryStatistics menuStatistics =
+                menu.stream().collect(Collectors.summarizingInt(Dish::getCalories));
+        //一次计算多个值
+        // IntSummaryStatistics{count=10, sum=4650, min=120, average=465.000000, max=800}
+        System.out.println(menuStatistics);
+
+        //字符串连接
+        String shortMenu = menu.stream().map(Dish::getName).collect(Collectors.joining(","));
+        System.out.println(shortMenu);
+
+        int totalCalories = menu.stream().map(Dish::getCalories).reduce(0, (i, j) -> i + j);
+
+        //分组
+        Map<Dish.Type, Long> typesCount = menu.stream().collect(
+                Collectors.groupingBy(Dish::getType, Collectors.counting()));
+        System.out.println(typesCount);
+
+        //分区函数
+        Map<Boolean, List<Dish>> partitionedMenu =
+                menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian));
+    }
     public static void match(){
         List<Dish> menu = new ArrayList<>();
 

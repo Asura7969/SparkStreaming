@@ -14,12 +14,12 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ModelFactory
-{
+import static java.util.regex.Pattern.*;
+
+public class ModelFactory {
   public static Logger log = Logger.getLogger(ModelFactory.class);
 
-  public static NginxLogModel getModel(String nginxLog)
-  {
+  public static NginxLogModel getModel(String nginxLog) {
     String[] nginxLogSplit = nginxLog.split(" ", -1);
     String bizType = nginxLogSplit[0];
 
@@ -116,7 +116,7 @@ public class ModelFactory
   }
 
   public static List<String> getDataList(String nginxLog, String patternStr) {
-    Pattern p = Pattern.compile(patternStr);
+    Pattern p = compile(patternStr);
     Matcher m = p.matcher(nginxLog);
 
     List<String> dataList = new ArrayList();
@@ -131,7 +131,7 @@ public class ModelFactory
   }
 
   public static String getUrl(String orgUrl) {
-    Pattern p = Pattern.compile("(.*?) (.*?) (.*?)$");
+    Pattern p = compile("(.*?) (.*?) (.*?)$");
     Matcher m = p.matcher(orgUrl);
 
     String url="";
@@ -172,8 +172,7 @@ public class ModelFactory
     return format.format(date);
   }
 
-  public static void main(String[] args)
-  {
+  public static void main(String[] args) {
     String str = "s1 219.138.139.139 - - [17/Feb/2017:12:11:30 +0800] \"POST /usercenter/appusedetail HTTP/1.1\" 200 51 \"\" \"HttpComponents/1.1\" 0.003 0.003 10.8.1.6";
     NginxLogModel model = ModelFactory.getModel(str);
     System.out.print(model);

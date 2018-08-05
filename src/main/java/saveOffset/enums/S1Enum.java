@@ -1,7 +1,6 @@
 package saveOffset.enums;
 
-public enum S1Enum
-{
+public enum S1Enum {
   BIZTYPE,
   IPS,
   REMOTE_USER,

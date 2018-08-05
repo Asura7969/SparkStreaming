@@ -6,11 +6,9 @@ import saveOffset.key.BizMinuteUrlIpKey;
 import saveOffset.key.BizMinuteUrlKey;
 import saveOffset.model.NginxLogModel;
 
-public class MyKryoRegistrator implements KryoRegistrator
-{
+public class MyKryoRegistrator implements KryoRegistrator {
   @Override
-  public void registerClasses(Kryo kryo)
-  {
+  public void registerClasses(Kryo kryo) {
     kryo.register(NginxLogModel.class);
     kryo.register(BizMinuteUrlIpKey.class);
     kryo.register(BizMinuteUrlKey.class);

@@ -102,6 +102,7 @@ public class SaveOffset {
                         kafkaParams,
                         consumerOffsetsLong,
                         new Function<MessageAndMetadata<String, String>, String>() {
+                            @Override
                             public String call(MessageAndMetadata<String, String> v1) throws Exception {
                                 return v1.message();
                             }
@@ -112,6 +113,7 @@ public class SaveOffset {
                 final AtomicReference<OffsetRange[]> offsetRanges = new AtomicReference();
 
                 JavaDStream<String> kafkaMessageDStreamTransform = kafkaMessageDStream.transform(new Function<JavaRDD<String>, JavaRDD<String>>() {
+                    @Override
                     public JavaRDD<String> call(JavaRDD<String> rdd) throws Exception {
 
                         OffsetRange[] offsets = ((HasOffsetRanges) rdd.rdd()).offsetRanges();

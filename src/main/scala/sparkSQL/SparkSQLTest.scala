@@ -32,13 +32,7 @@ object SparkSQLTest {
     inputRDD
       .map(_.split(","))
       .map(p=>Person(p(0),p(1).trim.toInt))
-      .filter(p=>{
-        if(p.age<20){
-          true
-        }else{
-          false
-        }
-      }).foreach(println)
+      .filter(_.age<20).foreach(println)
     /**
       * RDD转DataFrame
       */
@@ -56,13 +50,7 @@ object SparkSQLTest {
     sql("select * from people2").show()
 
     //Dataset RDD操作
-    peopleDataset.filter(p=>{
-      if(p.age<20){
-        true
-      }else{
-        false
-      }
-    }).show()
+    peopleDataset.filter(_.age<20).show()
 
     sparkSession.close()
 
